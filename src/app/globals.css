@@ -1,0 +1,290 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: false;
+}
+
+/* Palette "Mitternacht & Bernstein": two main colours and one accent.
+     dark   #101C36  midnight navy
+     light  #E8ECF3  a pale tone of the same blue (not white, not beige)
+     accent #F2A93B  amber
+   Every dark and light tone is the same blue hue at a different lightness, and amber is its
+   opposite on the colour wheel, so the set holds together. It also picks up the licence plate:
+   the navy sits with the plate's EU blue, the amber with its yellow stars.
+
+   The page alternates light and dark bands. Light is the default theme ("zmk").
+   Any element with data-theme="zmk-dark" switches itself and everything inside it to the
+   dark set, so the same class names work in both. Amber is only used as a fill on dark,
+   where it reads clearly; on light bands the marks and buttons are navy.
+   The three values are also in src/lib/site.ts for the share image. */
+@plugin "daisyui/theme" {
+  name: "zmk";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: #e8ecf3; /* light band */
+  --color-base-200: #dce2ec; /* panels on a light band */
+  --color-base-300: #cbd3e0;
+  --color-base-content: #101c36;
+  --color-primary: #101c36; /* links, labels, small marks */
+  --color-primary-content: #f3f5f9;
+  --color-secondary: #f2a93b; /* amber highlight */
+  --color-secondary-content: #101c36;
+  --color-accent: #101c36; /* fill of the main action */
+  --color-accent-content: #f3f5f9;
+  --color-neutral: #101c36;
+  --color-neutral-content: #f3f5f9;
+  --color-info: #101c36;
+  --color-info-content: #f3f5f9;
+  --color-success: #101c36;
+  --color-success-content: #f3f5f9;
+  --color-warning: #f2a93b;
+  --color-warning-content: #101c36;
+  --color-error: oklch(52% 0.2 27);
+  --color-error-content: #f3f5f9;
+
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "zmk-dark";
+  default: false;
+  prefersdark: false;
+  color-scheme: dark;
+
+  --color-base-100: #101c36; /* dark band */
+  --color-base-200: #1a2847; /* cards and panels on a dark band */
+  --color-base-300: #26365b;
+  --color-base-content: #f3f5f9;
+  --color-primary: #f2a93b;
+  --color-primary-content: #101c36;
+  --color-secondary: #f2a93b;
+  --color-secondary-content: #101c36;
+  --color-accent: #f2a93b;
+  --color-accent-content: #101c36;
+  --color-neutral: #0a1326; /* hero, footer, call-to-action: the deepest navy */
+  --color-neutral-content: #f3f5f9;
+  --color-info: #f2a93b;
+  --color-info-content: #101c36;
+  --color-success: #f2a93b;
+  --color-success-content: #101c36;
+  --color-warning: #f2a93b;
+  --color-warning-content: #101c36;
+  --color-error: oklch(72% 0.18 25);
+  --color-error-content: #101c36;
+
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plate), ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+a,
+button,
+summary {
+  touch-action: manipulation;
+}
+
+:target {
+  scroll-margin-top: 6rem;
+}
+
+/* Shared page width and side gutters. */
+@utility wrap {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Small uppercase label above headings. */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Home hero, sized so the whole of it shows without scrolling.
+   Header is 4rem tall on phones (plus the 4.75rem call bar at the bottom) and 4.5rem above that.
+   The headline scales with the screen height as well as its width, and the plate is sized
+   from the headline so the two always stay in proportion. */
+.hero-screen {
+  /* screen, minus the header (4rem + border), minus the call bar at the bottom
+     (button, padding, border, and the home-indicator inset on newer iPhones) */
+  min-height: calc(100svh - 4rem - 1px - 3.625rem - 1px - max(0.625rem, env(safe-area-inset-bottom)));
+}
+
+.hero-fit {
+  /* Largest headline that still leaves room for plate, picker and card on this screen height. */
+  --h1: clamp(1.9rem, min(11.2vw, calc(30.5svh - 10rem)), 3.4rem);
+  padding-block: clamp(0.875rem, 2.6svh, 2.25rem);
+}
+
+.hero-fit h1 {
+  font-size: var(--h1);
+}
+
+.hero-plate {
+  height: clamp(4.5rem, 13svh, 10.5rem);
+}
+
+@media (width >= 48rem) {
+  .hero-screen {
+    min-height: calc(100svh - 4.5rem - 1px);
+  }
+  .hero-fit {
+    --h1: clamp(3rem, min(8.2vw, 8.5svh), 5rem);
+  }
+  .hero-plate {
+    height: clamp(8rem, 19svh, 13rem);
+  }
+}
+
+@media (width >= 64rem) {
+  /* Two columns: the headline has to fit the left one, so its size follows the column
+     width as well as the screen height. The plate gets the right column to itself. */
+  .hero-fit {
+    --h1: clamp(2.4rem, min(4.9vw, 9svh), 4.25rem);
+  }
+  .hero-plate {
+    height: clamp(8.5rem, 30svh, 15rem);
+  }
+}
+
+/* The dark hero ground: two soft lights and a fine grid that drifts slowly. */
+.hero-ground {
+  background:
+    radial-gradient(64rem 36rem at 80% -8%, color-mix(in oklch, var(--color-secondary) 30%, transparent), transparent 62%),
+    radial-gradient(40rem 26rem at 4% 108%, color-mix(in oklch, #3d6bff 22%, transparent), transparent 60%),
+    var(--color-neutral);
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(to right, oklch(100% 0 0 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(100% 0 0 / 0.055) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 85% 75% at 60% 35%, black 25%, transparent 78%);
+  animation: grid-drift 28s linear infinite;
+}
+
+@keyframes grid-drift {
+  to {
+    background-position: 56px 56px;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.rise-2 {
+  animation-delay: 0.08s;
+}
+.rise-3 {
+  animation-delay: 0.16s;
+}
+.rise-4 {
+  animation-delay: 0.26s;
+}
+
+/* Editorial reveal: a block settles into place as it scrolls into view.
+   Tied to the scroll position itself, so it needs no script. Browsers without
+   scroll-driven animations simply show the content. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(2.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-grid,
+  .rise {
+    animation: none;
+  }
+}
+
+/* Room for the fixed call / WhatsApp bar on phones. */
+@media (width < 48rem) {
+  body {
+    padding-bottom: 4.75rem;
+  }
+}
