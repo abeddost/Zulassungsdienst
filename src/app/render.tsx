@@ -45,6 +45,8 @@ export function pageMetadata(lang: Lang, slug: string[] | undefined): Metadata {
   const url = absolute(href(doc.id, lang));
   return {
     metadataBase: new URL(site.url),
+    authors: [{ name: site.credit.name, url: site.credit.url }],
+    creator: site.credit.name,
     title: p.metaTitle,
     description: p.metaDescription,
     alternates: {

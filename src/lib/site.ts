@@ -81,6 +81,17 @@ export const site = {
   },
 
   factsCheckedOn: "2026-11-25",
+
+  /**
+   * Designer credit in the footer. Change name and url here when the agency site is live.
+   * The ?ref= tag lets the portfolio's statistics show visits that came from this site.
+   */
+  credit: {
+    name: "Abdul Qader Dost",
+    initials: "AQ",
+    url: "https://abeddost.vercel.app/?ref=zulassungsdienst",
+    label: { de: "Webdesign & Entwicklung", en: "Web design & development" },
+  },
 } as const;
 
 export function waLink(message: string): string {

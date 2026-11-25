@@ -187,16 +187,46 @@ export function Footer({ lang }: { lang: Lang }) {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="wrap flex flex-col gap-2 py-6 text-sm text-neutral-content/50 md:flex-row md:justify-between">
-          <p>
-            © {new Date().getFullYear()} <span translate="no">{site.name}</span>
-          </p>
-          <p>
-            {t.sources}, {formatDate(site.factsCheckedOn, lang)}
-          </p>
+        <div className="wrap flex flex-col gap-5 py-6 text-sm text-neutral-content/50 md:flex-row md:items-center md:justify-between">
+          <div className="space-y-1">
+            <p>
+              © {new Date().getFullYear()} <span translate="no">{site.name}</span>
+            </p>
+            <p>
+              {t.sources}, {formatDate(site.factsCheckedOn, lang)}
+            </p>
+          </div>
+          <DesignerCredit lang={lang} />
         </div>
       </div>
     </footer>
+  );
+}
+
+/** The designer's signature: a small badge in the footer that links to the portfolio. */
+function DesignerCredit({ lang }: { lang: Lang }) {
+  const c = site.credit;
+  return (
+    <a
+      href={c.url}
+      target="_blank"
+      rel="noopener"
+      className="group inline-flex items-center gap-3 self-start rounded-full border border-white/15 bg-white/[0.04] py-1.5 pr-4 pl-1.5 text-neutral-content transition-[border-color,background-color] duration-200 hover:border-secondary hover:bg-white/[0.07] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary md:self-auto"
+    >
+      <span aria-hidden="true" className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-[0.8rem] font-bold text-secondary-content">
+        {c.initials}
+      </span>
+      <span className="flex flex-col leading-tight">
+        <span className="text-[0.75rem] text-neutral-content/55">{c.label[lang]}</span>
+        <span className="font-semibold" translate="no">
+          {c.name}
+        </span>
+      </span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="ml-1 size-4 text-neutral-content/60 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-secondary">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </svg>
+      <span className="sr-only">{lang === "de" ? "(öffnet in neuem Tab)" : "(opens in a new tab)"}</span>
+    </a>
   );
 }
 
