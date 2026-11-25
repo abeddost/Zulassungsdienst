@@ -142,25 +142,25 @@ export function PageCard({ id, lang }: { id: string; lang: Lang }) {
   const doc = page(id);
   const p = doc[lang];
   const arrow = (
-    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-base-200 transition-colors duration-200 group-hover:bg-neutral group-hover:text-neutral-content">
+    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-content transition-colors duration-200 group-hover:bg-secondary group-hover:text-secondary-content">
       <ArrowIcon />
     </span>
   );
   return (
     <Link
       href={href(id, lang)}
-      className="group flex h-full items-center gap-4 rounded-2xl border border-base-content/10 bg-base-100 px-4 py-3.5 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-base-content/25 hover:shadow-lg hover:shadow-neutral/5 focus-visible:outline-2 focus-visible:outline-primary sm:flex-col sm:items-stretch sm:gap-0 sm:p-6"
+      className="group flex h-full items-center gap-4 rounded-2xl border border-primary/15 bg-primary/[0.07] px-4 py-3.5 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:flex-col sm:items-stretch sm:gap-0 sm:p-6"
     >
       <div className="min-w-0 flex-1 sm:flex sm:flex-col">
         <h3 className="font-display text-[1.08rem] leading-snug font-semibold sm:text-xl">{p.nav}</h3>
-        <p className="mt-2 hidden flex-1 text-[0.98rem] leading-relaxed text-base-content/65 sm:block">{p.teaser ?? p.lead}</p>
+        <p className="mt-2 hidden flex-1 text-[0.98rem] leading-relaxed text-base-content/70 sm:block">{p.teaser ?? p.lead}</p>
         <div className="mt-1.5 sm:mt-5 sm:flex sm:items-center sm:justify-between sm:gap-4">
           {doc.price ? (
-            <span className="inline-flex rounded-lg bg-secondary/35 px-2 py-0.5">
+            <span className="inline-flex rounded-lg bg-secondary px-2 py-0.5 text-secondary-content">
               <AmountTag id={id} lang={lang} />
             </span>
           ) : (
-            <span className="text-[0.95rem] font-semibold">{ui[lang].more}</span>
+            <span className="text-[0.95rem] font-semibold text-primary">{ui[lang].more}</span>
           )}
           <span className="hidden sm:flex">{arrow}</span>
         </div>
