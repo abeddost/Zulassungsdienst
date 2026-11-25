@@ -25,7 +25,7 @@ export function Header({ lang, otherHref }: { lang: Lang; otherHref: string }) {
       <div className="wrap flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
         <Link
           href={href("home", lang)}
-          className="flex items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+          className="flex min-h-11 items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
         >
           <Plate />
           <span className="hidden font-display text-[1.05rem] font-semibold tracking-tight whitespace-nowrap sm:block" translate="no">
@@ -66,7 +66,7 @@ export function Header({ lang, otherHref }: { lang: Lang; otherHref: string }) {
             href={otherHref}
             hrefLang={lang === "de" ? "en" : "de"}
             aria-label={t.otherLangLabel}
-            className="rounded-full px-3 py-2 font-mono text-xs font-semibold tracking-wider text-base-content/70 uppercase hover:bg-base-content/5 hover:text-base-content focus-visible:outline-2 focus-visible:outline-primary"
+            className="inline-flex size-11 items-center justify-center rounded-full font-mono text-xs font-semibold tracking-wider text-base-content/70 uppercase hover:bg-base-content/5 hover:text-base-content focus-visible:outline-2 focus-visible:outline-primary"
           >
             {lang === "de" ? "EN" : "DE"}
           </Link>
@@ -117,13 +117,13 @@ export function Header({ lang, otherHref }: { lang: Lang; otherHref: string }) {
 
 export function Footer({ lang }: { lang: Lang }) {
   const t = ui[lang];
-  const colTitle = "eyebrow mb-4 text-neutral-content/50";
+  const colTitle = "eyebrow mb-4 text-secondary";
   const linkCls =
-    "text-neutral-content/80 underline-offset-4 transition-colors hover:text-neutral-content hover:underline focus-visible:outline-2 focus-visible:outline-white";
+    "inline-flex min-h-10 items-center py-1 text-neutral-content/80 underline-offset-4 transition-colors hover:text-neutral-content hover:underline focus-visible:outline-2 focus-visible:outline-white";
   return (
     <footer className="bg-neutral text-neutral-content">
-      <div className="wrap grid gap-12 py-16 sm:grid-cols-2 md:py-20 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
-        <div>
+      <div className="wrap grid grid-cols-2 gap-x-6 gap-y-10 py-14 md:py-20 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12">
+        <div className="col-span-2 lg:col-span-1">
           <Plate size="lg" />
           <p className="mt-6 font-display text-xl font-semibold" translate="no">
             {site.name}
@@ -132,7 +132,7 @@ export function Footer({ lang }: { lang: Lang }) {
         </div>
         <div>
           <h2 className={colTitle}>{t.services}</h2>
-          <ul className="space-y-2.5 text-[0.95rem]">
+          <ul className="text-[0.95rem]">
             {serviceIds.map((id) => (
               <li key={id}>
                 <Link href={href(id, lang)} className={linkCls}>
@@ -144,7 +144,7 @@ export function Footer({ lang }: { lang: Lang }) {
         </div>
         <div>
           <h2 className={colTitle}>{t.guides}</h2>
-          <ul className="space-y-2.5 text-[0.95rem]">
+          <ul className="text-[0.95rem]">
             {["prices", ...guideIds].map((id) => (
               <li key={id}>
                 <Link href={href(id, lang)} className={linkCls}>
@@ -154,7 +154,7 @@ export function Footer({ lang }: { lang: Lang }) {
             ))}
           </ul>
           <h2 className={`${colTitle} mt-8`}>{t.legal}</h2>
-          <ul className="space-y-2.5 text-[0.95rem]">
+          <ul className="text-[0.95rem]">
             {["imprint", "privacy"].map((id) => (
               <li key={id}>
                 <Link href={href(id, lang)} className={linkCls}>
@@ -164,9 +164,9 @@ export function Footer({ lang }: { lang: Lang }) {
             ))}
           </ul>
         </div>
-        <div>
+        <div className="col-span-2 sm:col-span-1">
           <h2 className={colTitle}>{t.contact}</h2>
-          <ul className="space-y-4 text-[0.95rem]">
+          <ul className="text-[0.95rem]">
             <li>
               <a href={waLink(defaultMessage[lang])} target="_blank" rel="noopener noreferrer" className={`${linkCls} inline-flex items-center gap-2.5`}>
                 <WhatsAppIcon className="size-5 shrink-0" /> WhatsApp
@@ -178,7 +178,7 @@ export function Footer({ lang }: { lang: Lang }) {
               </a>
             </li>
             <li>
-              <a href={site.address.mapsUrl} target="_blank" rel="noopener noreferrer" className={`${linkCls} inline-flex items-start gap-2.5`}>
+              <a href={site.address.mapsUrl} target="_blank" rel="noopener noreferrer" className={`${linkCls} items-start gap-2.5`}>
                 <PinIcon className="mt-0.5 size-5 shrink-0" />
                 <span>{addressLine(lang)}</span>
               </a>

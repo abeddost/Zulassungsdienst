@@ -2,7 +2,8 @@ import Link from "next/link";
 import { href, page, ui } from "@/content";
 import { home } from "@/content/home";
 import type { Block } from "@/content/types";
-import { type PriceKey, prices, priceText } from "@/lib/prices";
+import { type PriceKey, priceText } from "@/lib/prices";
+import { PriceList } from "./price-list";
 import { site, type Lang } from "@/lib/site";
 import { Blocks } from "./blocks";
 import { PlateStage, type PlateVariant } from "./hero/PlateStage";
@@ -20,7 +21,7 @@ const homePrices: PriceKey[] = ["registration", "addressChange", "deregistration
 function Label({ n, children }: { n: string; children: string }) {
   return (
     <p className="eyebrow flex items-center gap-3 text-base-content/55">
-      <span className="tabular-nums text-primary">{n}</span>
+      <span className="rounded-[0.3rem] bg-secondary px-1.5 py-0.5 tabular-nums text-secondary-content">{n}</span>
       <span aria-hidden="true" className="h-px w-8 bg-base-content/25" />
       {children}
     </p>
@@ -98,7 +99,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                 <>
                   <p className="eyebrow text-secondary max-md:[@media(max-height:699px)]:hidden">{c.eyebrow}</p>
                   <h1 className="mt-3 leading-[0.96] font-semibold tracking-[-0.03em] md:mt-4">
-                    {c.h1[0]} <span className="text-neutral-content/45">{c.h1[1]}</span>
+                    {c.h1[0]} <span className="text-secondary">{c.h1[1]}</span>
                   </h1>
                 </>
               }
@@ -137,26 +138,26 @@ export function HomePage({ lang }: { lang: Lang }) {
       </section>
 
       {/* Services */}
-      <section className="wrap py-20 md:py-28">
+      <section className="wrap py-14 md:py-28">
         <Label n="01">{t.services}</Label>
         <div className="mt-6 grid gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-end md:gap-16">
           <h2 className={title}>{c.servicesTitle}</h2>
           <p className="reveal text-lg leading-relaxed text-base-content/70">{c.servicesLead}</p>
         </div>
         {/* Dealer service has its own band further down, which keeps this grid at 3 x 3. */}
-        <ServiceGrid lang={lang} exclude={["business"]} className="mt-12 lg:grid-cols-3" />
+        <ServiceGrid lang={lang} exclude={["business"]} className="mt-8 md:mt-12 lg:grid-cols-3" />
       </section>
 
       {/* Steps, beside the conversation they describe */}
       <section className="border-y border-base-content/10 bg-base-200">
-        <div className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+        <div className="wrap grid gap-12 py-14 md:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div>
             <Label n="02">{lang === "de" ? "Ablauf" : "Process"}</Label>
             <h2 className={`${title} mt-6`}>{c.stepsTitle}</h2>
-            <ol className="mt-12 border-t border-base-content/15">
+            <ol className="mt-8 border-t border-base-content/15 md:mt-12">
               {c.steps.map((step, i) => (
                 <li key={step.title} className="reveal grid grid-cols-[3.5rem_1fr] gap-x-4 border-b border-base-content/15 py-7 md:grid-cols-[5rem_1fr]">
-                  <span className="font-display text-3xl leading-none font-semibold text-primary tabular-nums md:text-4xl">0{i + 1}</span>
+                  <span className="self-start justify-self-start bg-[linear-gradient(transparent_58%,var(--color-secondary)_58%,var(--color-secondary)_94%,transparent_94%)] px-1 font-display text-3xl leading-none font-semibold tabular-nums md:text-4xl">0{i + 1}</span>
                   <div>
                     <h3 className="font-display text-2xl font-semibold">{step.title}</h3>
                     <p className="mt-2 max-w-[48ch] text-[1.04rem] leading-relaxed text-base-content/70">{step.text}</p>
@@ -166,7 +167,7 @@ export function HomePage({ lang }: { lang: Lang }) {
             </ol>
           </div>
 
-          <div aria-hidden="true" className="reveal self-center rounded-[1.75rem] bg-neutral p-2 shadow-2xl shadow-neutral/25 lg:rotate-1">
+          <div aria-hidden="true" className="reveal hidden self-center rounded-[1.75rem] bg-neutral md:block p-2 shadow-2xl shadow-neutral/25 lg:rotate-1">
             <div className="rounded-[1.35rem] bg-[#0b141a]">
               <div className="flex items-center gap-3 border-b border-white/8 px-4 py-3.5">
                 <span className="flex size-10 items-center justify-center rounded-full bg-white">
@@ -202,31 +203,66 @@ export function HomePage({ lang }: { lang: Lang }) {
       </section>
 
       {/* Compare */}
-      <section className="wrap py-20 md:py-28">
+      <section className="wrap py-14 md:py-28">
         <Label n="03">{lang === "de" ? "Vergleich" : "Comparison"}</Label>
         <div className="mt-6 grid gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-end md:gap-16">
           <h2 className={title}>{c.compareTitle}</h2>
           <p className="reveal text-lg leading-relaxed text-base-content/70">{c.compareLead}</p>
         </div>
-        <div className="reveal mt-12 overflow-x-auto rounded-2xl border border-base-content/10">
-          <table className="w-full min-w-[40rem] border-collapse text-left">
+        <ul className="mt-8 space-y-3 md:hidden">
+          {c.compareRows.map((row) => (
+            <li key={row[0]} className="overflow-hidden rounded-2xl border border-base-content/10 bg-base-100">
+              <p className="px-4 pt-3.5 text-[0.8rem] font-semibold tracking-[0.12em] text-base-content/55 uppercase">{row[0]}</p>
+              <p className="px-4 pt-1.5 pb-3 text-[0.98rem] text-base-content/70">
+                <span className="sr-only">{c.compareHead[1]}: </span>
+                {row[1]}
+              </p>
+              <p className="flex items-start gap-2.5 bg-neutral px-4 py-3 text-[0.98rem] font-semibold text-neutral-content">
+                <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-content">
+                  <CheckIcon className="size-3" />
+                </span>
+                <span>
+                  <span className="sr-only">{c.compareHead[2]}: </span>
+                  {row[2]}
+                </span>
+              </p>
+            </li>
+          ))}
+        </ul>
+        <div className="reveal mt-12 hidden overflow-hidden rounded-2xl border border-base-content/10 md:block">
+          <table className="w-full border-collapse text-left">
             <thead>
               <tr>
                 <th scope="col" className="w-[22%] px-5 py-4">
                   <span className="sr-only">{lang === "de" ? "Kriterium" : "Criterion"}</span>
                 </th>
                 <th scope="col" className="px-5 py-4 font-display text-lg font-semibold text-base-content/60">{c.compareHead[1]}</th>
-                <th scope="col" className="bg-neutral px-5 py-4 font-display text-lg font-semibold text-neutral-content">{c.compareHead[2]}</th>
+                <th scope="col" className="bg-secondary px-6 py-4 font-display text-lg font-semibold text-secondary-content">{c.compareHead[2]}</th>
               </tr>
             </thead>
             <tbody>
-              {c.compareRows.map((row) => (
-                <tr key={row[0]} className="border-t border-base-content/10">
-                  <th scope="row" className="px-5 py-4 align-top font-semibold">{row[0]}</th>
-                  <td className="px-5 py-4 align-top text-base-content/70">{row[1]}</td>
-                  <td className="bg-neutral px-5 py-4 align-top font-medium text-neutral-content">{row[2]}</td>
-                </tr>
-              ))}
+              {c.compareRows.map((row, i) => {
+                const last = i === c.compareRows.length - 1;
+                return (
+                  <tr key={row[0]} className="border-t border-base-content/10">
+                    <th scope="row" className="px-5 py-4 align-middle font-semibold">{row[0]}</th>
+                    <td className="px-5 py-4 align-middle text-base-content/70">
+                      <span className="flex items-start gap-3">
+                        <span aria-hidden="true" className="mt-[0.6em] h-0.5 w-3 shrink-0 rounded-full bg-base-content/30" />
+                        {row[1]}
+                      </span>
+                    </td>
+                    <td className="border-t border-white/10 bg-neutral px-6 py-4 align-middle font-medium text-neutral-content">
+                      <span className="flex items-center gap-3">
+                        <span aria-hidden="true" className="flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-content">
+                          <CheckIcon className="size-3.5" />
+                        </span>
+                        {last ? <span className="rounded-lg bg-secondary px-2.5 py-0.5 font-semibold text-secondary-content">{row[2]}</span> : row[2]}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -235,31 +271,23 @@ export function HomePage({ lang }: { lang: Lang }) {
 
       {/* Prices */}
       <section className="border-y border-base-content/10 bg-base-200">
-        <div className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div className="wrap grid gap-8 py-14 md:gap-12 md:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div>
             <Label n="04">{page("prices")[lang].nav}</Label>
             <h2 className={`${title} mt-6`}>{c.pricesTitle}</h2>
             <p className="reveal mt-6 text-lg leading-relaxed text-base-content/70">{c.pricesLead}</p>
-            <Link href={href("prices", lang)} className="mt-8 inline-flex min-h-12 items-center gap-2.5 rounded-full bg-neutral px-6 font-semibold text-neutral-content transition-colors hover:bg-neutral/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            <Link href={href("prices", lang)} className="mt-8 inline-flex min-h-12 items-center gap-2.5 rounded-full bg-secondary px-6 font-semibold text-secondary-content transition-[filter] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral">
               {c.pricesLink} <ArrowIcon />
             </Link>
           </div>
-          <ul className="reveal self-start border-t border-base-content/20">
-            {homePrices.map((key) => (
-              <li key={key} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-base-content/20 py-6">
-                <div className="min-w-0 max-w-md">
-                  <p className="text-[1.08rem] font-semibold">{prices[key].label[lang]}</p>
-                  <p className="mt-1 text-[0.95rem] text-base-content/60">{prices[key].includes[lang]}</p>
-                </div>
-                <p className="font-display text-3xl font-semibold whitespace-nowrap tabular-nums md:text-4xl">{priceText(key, lang)}</p>
-              </li>
-            ))}
-          </ul>
+          <div className="reveal self-start">
+            <PriceList keys={homePrices} lang={lang} feature />
+          </div>
         </div>
       </section>
 
       {/* Area + business */}
-      <section className="wrap grid gap-4 py-20 md:py-28 lg:grid-cols-[1.25fr_1fr]">
+      <section className="wrap grid gap-4 py-14 md:py-28 lg:grid-cols-[1.25fr_1fr]">
         <div className="reveal rounded-3xl border border-base-content/10 p-7 md:p-10">
           <p className="eyebrow flex items-center gap-2 text-primary">
             <PinIcon className="size-4" /> {site.address.postalCode} {site.address.district}
@@ -291,7 +319,7 @@ export function HomePage({ lang }: { lang: Lang }) {
 
       {/* FAQ */}
       <section className="border-t border-base-content/10">
-        <div className="wrap max-w-4xl py-20 md:py-28">
+        <div className="wrap max-w-4xl py-14 md:py-28">
           <Blocks blocks={[faqBlock]} lang={lang} />
         </div>
       </section>

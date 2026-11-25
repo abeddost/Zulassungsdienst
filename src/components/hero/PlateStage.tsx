@@ -127,20 +127,33 @@ export function PlateStage({ variants, text, district, waNumber, intro, children
         </div>
 
         {/* Picker */}
-        <div role="group" aria-label={text.pick} className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden">
+        <div role="group" aria-label={text.pick} className="-mx-5 flex gap-2 overflow-x-auto px-5 py-1 max-md:[@media(max-height:679px)]:pt-0 [mask-image:linear-gradient(to_right,#000_82%,transparent)] [scrollbar-width:none] md:-mx-1.5 md:px-1.5 md:[mask-image:none] [&::-webkit-scrollbar]:hidden">
           {variants.map((v) => {
             const on = v.id === active.id;
+            const ink = inkOn(v.accent);
             return (
               <button
                 key={v.id}
                 type="button"
                 aria-pressed={on}
                 onClick={() => setActiveId(v.id)}
-                className={`inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border px-3.5 text-[0.93rem] font-semibold whitespace-nowrap transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
-                  on ? "border-white bg-white text-black" : "border-white/20 text-white/80 hover:border-white/50 hover:text-white"
+                style={
+                  on
+                    ? { backgroundColor: v.accent, borderColor: v.accent, color: ink }
+                    : {
+                        backgroundColor: `color-mix(in oklab, ${v.accent} 24%, transparent)`,
+                        borderColor: `color-mix(in oklab, ${v.accent} 65%, transparent)`,
+                      }
+                }
+                className={`inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border px-4 text-[0.93rem] font-semibold whitespace-nowrap transition-[filter,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+                  on ? "shadow-lg shadow-black/30 ring-2 ring-white/80 ring-offset-2 ring-offset-transparent" : "text-white hover:brightness-125"
                 }`}
               >
-                <span aria-hidden="true" className="size-2.5 rounded-full" style={{ backgroundColor: v.accent }} />
+                {on && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="size-3.5">
+                    <path d="m5 12.5 4.5 4.5L19 7.5" />
+                  </svg>
+                )}
                 {v.label}
               </button>
             );
@@ -149,10 +162,10 @@ export function PlateStage({ variants, text, district, waNumber, intro, children
 
         {/* What the chosen plate means. Every type uses the same amount of room, so the
             hero keeps its height when the visitor switches. */}
-        <div aria-live="polite" className="mt-3 rounded-3xl border border-white/12 bg-white/[0.055] p-4 backdrop-blur-sm md:mt-4 md:p-5">
+        <div aria-live="polite" className="mt-3 rounded-3xl border border-white/12 bg-white/[0.055] p-4 backdrop-blur-sm md:mt-4 md:p-5 max-md:[@media(max-height:679px)]:mt-2 max-md:[@media(max-height:679px)]:p-3">
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="min-w-0 truncate font-display text-[1.15rem] font-semibold text-white md:text-2xl">{active.title}</h2>
-            <p className="shrink-0 font-display text-lg font-semibold text-white tabular-nums md:text-xl">{active.price}</p>
+            <p className="shrink-0 rounded-lg bg-secondary px-2.5 py-0.5 font-display text-lg font-semibold text-secondary-content tabular-nums md:text-xl">{active.price}</p>
           </div>
 
           {active.custom ? (
@@ -193,7 +206,7 @@ export function PlateStage({ variants, text, district, waNumber, intro, children
             </p>
           )}
 
-          <div className="mt-3.5 flex gap-2.5 md:mt-4">
+          <div className="mt-3.5 flex gap-2.5 md:mt-4 max-md:[@media(max-height:679px)]:mt-2.5">
             <a
               href={waHref}
               target="_blank"
@@ -221,6 +234,13 @@ export function PlateStage({ variants, text, district, waNumber, intro, children
       <div className="hidden md:block lg:col-start-1 lg:row-start-2 lg:self-start">{children}</div>
     </div>
   );
+}
+
+/** Dark or white text, whichever reads better on the given colour. */
+function inkOn(hex: string): string {
+  const n = parseInt(hex.slice(1), 16);
+  const lum = (0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
+  return lum > 0.5 ? "#0b1020" : "#ffffff";
 }
 
 /** Plain HTML plate shown until the 3D scene has loaded, and when scripts are off. */

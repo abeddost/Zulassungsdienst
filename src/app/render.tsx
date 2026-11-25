@@ -77,7 +77,8 @@ export function RenderPage({ lang, slug }: { lang: Lang; slug: string[] | undefi
   const p = doc[lang];
   return (
     <>
-      <Header lang={lang} otherHref={href(doc.id, other)} />
+      {/* A fresh header per page, so an open phone menu closes after navigating. */}
+      <Header key={`${lang}-${doc.id}`} lang={lang} otherHref={href(doc.id, other)} />
       <main id="main" className="flex-1">
         {pageSchemas(doc, lang).map((schema, i) => (
           <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(schema) }} />

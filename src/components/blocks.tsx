@@ -1,5 +1,5 @@
 import type { Block } from "@/content/types";
-import { prices, priceText } from "@/lib/prices";
+import { PriceList } from "./price-list";
 import type { Lang } from "@/lib/site";
 import { Rich } from "./rich";
 import { CheckIcon } from "./ui";
@@ -86,7 +86,7 @@ function BlockView({ block, lang }: { block: Block; lang: Lang }) {
                 <ul className="space-y-3">
                   {group.items.map((item, i) => (
                     <li key={i} className="flex gap-3.5 text-[1.02rem] leading-relaxed text-base-content/85">
-                      <span className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <span className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-content">
                         <CheckIcon className="size-3.5" />
                       </span>
                       <span>
@@ -123,7 +123,7 @@ function BlockView({ block, lang }: { block: Block; lang: Lang }) {
                 {i < block.steps.length - 1 && (
                   <span aria-hidden="true" className="absolute left-[1.05rem] top-10 bottom-1 w-px bg-base-content/15" />
                 )}
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-neutral font-mono text-sm font-bold text-neutral-content tabular-nums">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-sm font-bold text-secondary-content tabular-nums">
                   {i + 1}
                 </span>
                 <div className="pt-1">
@@ -149,8 +149,31 @@ function BlockView({ block, lang }: { block: Block; lang: Lang }) {
               <Rich text={block.intro} lang={lang} />
             </p>
           )}
-          <div className="overflow-x-auto rounded-2xl border border-base-content/10">
-            <table className="w-full min-w-[30rem] border-collapse text-left text-[0.98rem]">
+          {/* Phones: three-column tables become one card per row, so nothing scrolls sideways.
+              Two-column tables fit as they are. */}
+          {block.head.length > 2 && (
+            <ul className="space-y-3 md:hidden">
+              {block.rows.map((row, ri) => (
+                <li key={ri} className="rounded-2xl border border-base-content/10 bg-base-100 p-4">
+                  <p className="font-semibold">
+                    <Rich text={row[0]} lang={lang} />
+                  </p>
+                  <dl className="mt-2.5 space-y-2">
+                    {row.slice(1).map((cell, ci) => (
+                      <div key={ci} className="grid grid-cols-[7.5rem_1fr] gap-3 text-[0.95rem]">
+                        <dt className="text-base-content/55">{block.head[ci + 1]}</dt>
+                        <dd className={ci === row.length - 2 ? "font-semibold" : "text-base-content/80"}>
+                          <Rich text={cell} lang={lang} />
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className={`overflow-hidden rounded-2xl border border-base-content/10 ${block.head.length > 2 ? "hidden md:block" : ""}`}>
+            <table className="w-full border-collapse text-left text-[0.98rem]">
               <thead>
                 <tr className="bg-base-200">
                   {block.head.map((cell, i) => (
@@ -169,8 +192,11 @@ function BlockView({ block, lang }: { block: Block; lang: Lang }) {
                           <Rich text={cell} lang={lang} />
                         </th>
                       ) : (
-                        <td key={ci} className={`px-4 py-3.5 text-base-content/80 tabular-nums md:px-5 ${cell.length <= 20 ? "whitespace-nowrap" : ""}`}>
-                          <Rich text={cell} lang={lang} />
+                        <td
+                          key={ci}
+                          className={`px-4 py-3.5 tabular-nums md:px-5 ${ci === row.length - 1 ? "font-semibold text-base-content" : "text-base-content/80"} ${cell.length <= 12 ? "whitespace-nowrap" : ""}`}
+                        >
+                          <Rich text={cell.replace(/ €/g, "\u00a0€")} lang={lang} />
                         </td>
                       ),
                     )}
@@ -257,17 +283,7 @@ function BlockView({ block, lang }: { block: Block; lang: Lang }) {
           <h2 id={headingId(block.h2)} className={`${h2Cls} mb-5`}>
             {block.h2}
           </h2>
-          <ul className="divide-y divide-base-content/10 rounded-2xl border border-base-content/10 bg-base-100">
-            {block.keys.map((key) => (
-              <li key={key} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 p-5 md:px-7">
-                <div className="min-w-0">
-                  <p className="font-medium">{prices[key].label[lang]}</p>
-                  <p className="mt-0.5 text-[0.95rem] text-base-content/60">{prices[key].includes[lang]}</p>
-                </div>
-                <p className="font-display text-2xl font-semibold whitespace-nowrap tabular-nums">{priceText(key, lang)}</p>
-              </li>
-            ))}
-          </ul>
+          <PriceList keys={block.keys} lang={lang} />
           {block.note && (
             <p className="mt-4 text-[0.95rem] leading-relaxed text-base-content/60">
               <Rich text={block.note} lang={lang} />
