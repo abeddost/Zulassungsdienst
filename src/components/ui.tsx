@@ -47,7 +47,7 @@ export function PinIcon({ className = "size-5" }: IconProps) {
 
 /* ---------- Contact actions: the only two ways to reach the business ---------- */
 
-// The main action (WhatsApp): amber on dark bands, navy on light ones (see the two themes).
+// The main action (WhatsApp): lime on dark bands, blue on light ones (see the two themes).
 const WA_GREEN = "bg-accent text-accent-content hover:brightness-95 focus-visible:outline-accent";
 
 export function WhatsAppButton({

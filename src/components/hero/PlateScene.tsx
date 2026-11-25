@@ -81,8 +81,9 @@ export default function PlateScene({ spec, flipKey, accent, onReady, onFail }: P
       }
 
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      // The light on the plate follows the theme's accent where it is a plain hex colour.
-      const themeAccent = getComputedStyle(el).getPropertyValue("--color-secondary").trim();
+      // The light on the plate comes from the theme: --plate-glow if set, else the accent.
+      const style = getComputedStyle(el);
+      const themeAccent = (style.getPropertyValue("--plate-glow") || style.getPropertyValue("--color-secondary")).trim();
       if (/^#[0-9a-f]{3,8}$/i.test(themeAccent)) latest.current.accent = themeAccent;
       const coarse = window.matchMedia("(pointer: coarse)").matches;
 

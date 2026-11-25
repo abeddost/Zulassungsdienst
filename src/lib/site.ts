@@ -17,10 +17,10 @@ export const site = {
   name: "Zulassungsdienst Mainz-Kastel",
   shortName: "Zulassungsdienst Kastel",
   /**
-   * Brand colours, palette "Mitternacht & Bernstein": navy and pale-blue bands in turn, amber accent.
+   * Brand colours, palette "Tiefblau & Limette": deep-blue and pale-blue bands in turn, lime accent.
    * The theme in src/app/globals.css sets the same three values; change both together.
    */
-  colors: { dark: "#101C36", light: "#E8ECF3", accent: "#F2A93B" },
+  colors: { dark: "#0A1647", light: "#E9F0FC", accent: "#D4F03C" },
 
   /** Letters shown on the licence-plate logo. */
   plate: { district: "WI", letters: "MK", digits: "93" },
