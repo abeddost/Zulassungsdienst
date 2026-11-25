@@ -1,13 +1,16 @@
 /**
- * DRAFT PRICES. Proposed from competitor research on 2026-11-25 and not yet
- * confirmed by the owner. Change the numbers here and every page follows.
+ * DRAFT PRICES, set at Wiesbaden market level (research 2026-11-25), not yet confirmed
+ * by the owner. Change the numbers here and every page follows.
  *
- * Benchmarks found:
- *  - Neighbouring service (Wiesbadener Str. 91): 149.90 EUR drop-off, 249.90 EUR with pickup,
- *    both including two plates, emissions sticker and authority fees.
- *  - Online services in Rhein-Main: 99-135 EUR without plates, 129-150 EUR with plates,
- *    deregistration 30-50 EUR.
- *  - Regional agents (Offenbach/Frankfurt): 120-150 EUR all-in, deregistration 30 EUR.
+ * Wiesbaden benchmarks (all including authority fees):
+ *  - WIZD, Erbenheim (wizd.de/preise): registration / transfer / new car 129 EUR plus 30 EUR
+ *    plates, or 149 EUR all-in as "Express"; 249 EUR with pickup and delivery;
+ *    deregistration 30 EUR (99 EUR with pickup); address change 60-70 EUR;
+ *    short-term plates 129 EUR plus plates; EU import 129 EUR plus plates;
+ *    lost registration certificate 70 EUR; plates 30 EUR; export on request.
+ *  - Zulassungsdienst Wiesbaden / CarChing, Wiesbadener Str. 91: 149.90 EUR all-in,
+ *    249.90 EUR with pickup and delivery; custom plate +15.90 EUR.
+ *  - Online services in Rhein-Main: 125-150 EUR with plates, deregistration 30-50 EUR.
  */
 
 import type { Lang } from "./site";
@@ -28,7 +31,8 @@ export type PriceKey =
   | "sticker";
 
 type Price = {
-  amount: number;
+  /** null = "on request": shown as "auf Anfrage" and left out of the price data for search engines. */
+  amount: number | null;
   from: boolean;
   label: Record<Lang, string>;
   includes: Record<Lang, string>;
@@ -36,7 +40,7 @@ type Price = {
 
 export const prices: Record<PriceKey, Price> = {
   registration: {
-    amount: 139,
+    amount: 159,
     from: true,
     label: {
       de: "Zulassung, Ummeldung mit Halterwechsel, Wiederzulassung",
@@ -48,7 +52,7 @@ export const prices: Record<PriceKey, Price> = {
     },
   },
   addressChange: {
-    amount: 69,
+    amount: 79,
     from: true,
     label: {
       de: "Ummeldung ohne neue Kennzeichen (Umzug, Namens- oder Adressänderung)",
@@ -57,13 +61,13 @@ export const prices: Record<PriceKey, Price> = {
     includes: { de: "inkl. Behördengebühren", en: "incl. authority fees" },
   },
   deregistration: {
-    amount: 29,
+    amount: 39,
     from: false,
     label: { de: "Abmeldung (Außerbetriebsetzung)", en: "Deregistration" },
     includes: { de: "inkl. Behördengebühr", en: "incl. authority fee" },
   },
   shortTerm: {
-    amount: 79,
+    amount: 149,
     from: true,
     label: { de: "Kurzzeitkennzeichen (5 Tage)", en: "Short-term plates (5 days)" },
     includes: {
@@ -72,25 +76,25 @@ export const prices: Record<PriceKey, Price> = {
     },
   },
   export: {
-    amount: 149,
-    from: true,
+    amount: null, // on request: depends on vehicle, destination and insurance term
+    from: false,
     label: { de: "Ausfuhrkennzeichen", en: "Export plates" },
     includes: {
-      de: "inkl. Behördengebühr und Schilder, Versicherung und Kfz-Steuer separat",
-      en: "incl. authority fee and plates, insurance and vehicle tax separate",
+      de: "Festpreis nach kurzer Prüfung per WhatsApp, inkl. Behördengebühr und Schilder",
+      en: "fixed price after a quick check on WhatsApp, incl. authority fee and plates",
     },
   },
   customPlate: {
-    amount: 15,
+    amount: 19,
     from: false,
     label: { de: "Wunschkennzeichen reservieren", en: "Custom plate reservation" },
     includes: {
-      de: "Aufpreis, inkl. 12,80 € Behördengebühr",
-      en: "surcharge, incl. the €12.80 authority fee",
+      de: "Aufpreis, inkl. 12,80 € Behördengebühr und Reservierung",
+      en: "surcharge, incl. the €12.80 authority fee and the reservation",
     },
   },
   pickup: {
-    amount: 49,
+    amount: 89,
     from: false,
     label: { de: "Abhol- und Bringservice", en: "Pickup and delivery" },
     includes: {
@@ -99,16 +103,19 @@ export const prices: Record<PriceKey, Price> = {
     },
   },
   replacement: {
-    amount: 89,
+    amount: 99,
     from: true,
     label: {
       de: "Ersatzpapiere oder Ersatzkennzeichen nach Verlust",
       en: "Replacement papers or plates after loss",
     },
-    includes: { de: "zzgl. Behördengebühren nach Aufwand", en: "plus authority fees as charged" },
+    includes: {
+      de: "inkl. Behördengebühren, neue Schilder bei Kennzeichenverlust extra",
+      en: "incl. authority fees, new plates extra if plates were lost",
+    },
   },
   import: {
-    amount: 189,
+    amount: 199,
     from: true,
     label: { de: "Zulassung eines Importfahrzeugs", en: "Registration of an imported vehicle" },
     includes: {
@@ -117,13 +124,13 @@ export const prices: Record<PriceKey, Price> = {
     },
   },
   platePair: {
-    amount: 25,
+    amount: 30,
     from: false,
     label: { de: "Kennzeichenpaar einzeln", en: "Pair of plates only" },
     includes: { de: "geprägt, DIN-zertifiziert", en: "embossed, DIN certified" },
   },
   sticker: {
-    amount: 8,
+    amount: 10,
     from: false,
     label: { de: "Umweltplakette", en: "Emissions sticker" },
     includes: { de: "grüne Feinstaubplakette", en: "green low-emission sticker" },
@@ -132,7 +139,12 @@ export const prices: Record<PriceKey, Price> = {
 
 export function priceText(key: PriceKey, lang: Lang): string {
   const p = prices[key];
+  if (p.amount === null) return onRequest(lang);
   const amount = lang === "de" ? `${p.amount} €` : `€${p.amount}`;
   if (!p.from) return amount;
   return lang === "de" ? `ab ${amount}` : `from ${amount}`;
+}
+
+export function onRequest(lang: Lang): string {
+  return lang === "de" ? "auf Anfrage" : "on request";
 }

@@ -180,7 +180,7 @@ function pageSchemas(doc: PageDoc, lang: Lang): unknown[] {
       url,
       provider: { "@id": businessId },
       areaServed: { "@type": "City", name: "Wiesbaden" },
-      ...(doc.price
+      ...(doc.price && prices[doc.price].amount !== null
         ? {
             offers: {
               "@type": "Offer",

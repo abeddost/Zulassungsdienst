@@ -1,4 +1,4 @@
-import { type PriceKey, prices } from "@/lib/prices";
+import { onRequest, type PriceKey, prices } from "@/lib/prices";
 import type { Lang } from "@/lib/site";
 
 /**
@@ -13,6 +13,13 @@ const SUPPORTING: PriceKey[] = ["pickup", "platePair", "sticker", "customPlate"]
 
 export function Amount({ k, lang, size = "md" }: { k: PriceKey; lang: Lang; size?: "sm" | "md" }) {
   const p = prices[k];
+  if (p.amount === null) {
+    return (
+      <span className={`inline-flex justify-end font-display font-semibold whitespace-nowrap ${size === "sm" ? "text-[0.95rem]" : "text-[1.05rem] md:text-[1.2rem]"}`}>
+        {onRequest(lang)}
+      </span>
+    );
+  }
   const value = lang === "de" ? `${p.amount} €` : `€${p.amount}`;
   const prefix = p.from ? (lang === "de" ? "ab" : "from") : prices[k].includes.de.startsWith("Aufpreis") ? "+" : null;
   return (

@@ -235,7 +235,7 @@ export const servicePagesB: PageDoc[] = [
             "Die amtliche Gebühr für die Zuteilung liegt laut Stadt Wiesbaden zwischen 30 und 70 Euro. Dazu kommen Schilder, Versicherung und Steuer.",
           ],
         },
-        { type: "price", h2: "Unser Preis", keys: ["export"], note: "Enthalten sind Antrag, Behördengebühr und Schilder. Die Vorführung des Fahrzeugs stimmen wir einzeln mit Ihnen ab." },
+        { type: "price", h2: "Unser Preis", keys: ["export"], note: "Der Aufwand hängt vom Fahrzeug, vom Zielland und von der Laufzeit ab. Schicken Sie uns Fotos der Papiere per WhatsApp, dann nennen wir Ihnen einen Festpreis, bevor Sie etwas abgeben. Enthalten sind Antrag, Behördengebühr und Schilder; die Vorführung des Fahrzeugs stimmen wir einzeln mit Ihnen ab." },
         {
           type: "faq",
           h2: "Häufige Fragen",
@@ -312,7 +312,7 @@ export const servicePagesB: PageDoc[] = [
             "According to the City of Wiesbaden the official fee is between 30 and 70 euros. Plates, insurance and tax come on top.",
           ],
         },
-        { type: "price", h2: "Our price", keys: ["export"], note: "Includes the application, the authority fee and the plates. We arrange the vehicle presentation with you individually." },
+        { type: "price", h2: "Our price", keys: ["export"], note: "The effort depends on the vehicle, the destination and the period. Send us photos of the papers on WhatsApp and we give you a fixed price before you hand anything in. It covers the application, the authority fee and the plates; we arrange the vehicle presentation with you individually." },
         {
           type: "faq",
           h2: "Common questions",
