@@ -217,7 +217,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                 <span className="sr-only">{c.compareHead[1]}: </span>
                 {row[1]}
               </p>
-              <p className="flex items-start gap-2.5 bg-neutral px-4 py-3 text-[0.98rem] font-semibold text-neutral-content">
+              <p className="flex items-start gap-2.5 border-t border-base-content/10 bg-secondary/15 px-4 py-3 text-[0.98rem] font-semibold text-base-content">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-content">
                   <CheckIcon className="size-3" />
                 </span>
@@ -252,7 +252,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                         {row[1]}
                       </span>
                     </td>
-                    <td className="border-t border-white/10 bg-neutral px-6 py-4 align-middle font-medium text-neutral-content">
+                    <td className="bg-secondary/15 px-6 py-4 align-middle font-medium text-base-content">
                       <span className="flex items-center gap-3">
                         <span aria-hidden="true" className="flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-content">
                           <CheckIcon className="size-3.5" />
