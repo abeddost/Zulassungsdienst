@@ -17,7 +17,7 @@ type Props = {
   spec: PlateSpec;
   /** Changes when the plate should flip to a new type (not on every keystroke). */
   flipKey: string;
-  /** Colour of the light on and behind the plate, as a hex string. */
+  /** Accent colour of the current type, as a hex string. */
   accent: string;
   onReady: () => void;
   onFail: () => void;
@@ -81,10 +81,9 @@ export default function PlateScene({ spec, flipKey, accent, onReady, onFail }: P
       }
 
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      // The light on the plate comes from the theme: --plate-glow if set, else the accent.
-      const style = getComputedStyle(el);
-      const themeAccent = (style.getPropertyValue("--plate-glow") || style.getPropertyValue("--color-secondary")).trim();
-      if (/^#[0-9a-f]{3,8}$/i.test(themeAccent)) latest.current.accent = themeAccent;
+      // A theme can pin one accent for all plate types; see --hero-accent-fixed in PlateStage.
+      const fixedAccent = getComputedStyle(document.documentElement).getPropertyValue("--hero-accent-fixed").trim();
+      if (fixedAccent) latest.current.accent = fixedAccent;
       const coarse = window.matchMedia("(pointer: coarse)").matches;
 
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75));
@@ -319,7 +318,7 @@ export default function PlateScene({ spec, flipKey, accent, onReady, onFail }: P
           flip.active = true;
         },
         tint(hex) {
-          targetAccent.set(hex);
+          targetAccent.set(fixedAccent || hex);
           if (reduceMotion) still();
         },
       };

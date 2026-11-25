@@ -47,8 +47,7 @@ export function PinIcon({ className = "size-5" }: IconProps) {
 
 /* ---------- Contact actions: the only two ways to reach the business ---------- */
 
-// The main action (WhatsApp): lime on dark bands, blue on light ones (see the two themes).
-const WA_GREEN = "bg-accent text-accent-content hover:brightness-95 focus-visible:outline-accent";
+const WA_GREEN = "bg-[#1f9d55] text-white hover:bg-[#178246] focus-visible:outline-[#1f9d55]";
 
 export function WhatsAppButton({
   message,
@@ -66,7 +65,7 @@ export function WhatsAppButton({
       href={waLink(message)}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2.5 rounded-full font-semibold transition-[filter] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 ${WA_GREEN} ${
+      className={`inline-flex items-center justify-center gap-2.5 rounded-full font-semibold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 ${WA_GREEN} ${
         size === "lg" ? "min-h-14 px-7 text-lg" : "min-h-12 px-5 text-base"
       } ${className}`}
     >

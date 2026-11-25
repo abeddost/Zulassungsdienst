@@ -15,10 +15,10 @@ export function Header({ lang, otherHref }: { lang: Lang; otherHref: string }) {
     "whitespace-nowrap rounded-full px-3.5 py-2 text-[0.95rem] font-medium text-base-content/80 transition-colors hover:bg-base-content/5 hover:text-base-content focus-visible:outline-2 focus-visible:outline-primary";
 
   return (
-    <header data-theme="zmk-dark" className="sticky top-0 z-40 border-b border-base-content/10 bg-base-100/97 text-base-content backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-base-content/10 bg-base-100/85 backdrop-blur-md">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-secondary focus:px-4 focus:py-2 focus:text-secondary-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-neutral focus:px-4 focus:py-2 focus:text-neutral-content"
       >
         {t.skip}
       </a>
@@ -40,12 +40,12 @@ export function Header({ lang, otherHref }: { lang: Lang; otherHref: string }) {
               {t.services}
             </Link>
             <div className="invisible absolute left-0 top-full w-[34rem] pt-3 opacity-0 transition-[opacity,visibility] duration-150 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-              <ul className="grid grid-cols-2 gap-1 rounded-2xl border border-base-content/10 bg-base-200 p-2 shadow-xl shadow-black/40">
+              <ul className="grid grid-cols-2 gap-1 rounded-2xl border border-base-content/10 bg-base-100 p-2 shadow-xl shadow-neutral/10">
                 {serviceIds.map((id) => (
                   <li key={id}>
                     <Link
                       href={href(id, lang)}
-                      className="block rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium hover:bg-base-300 focus-visible:outline-2 focus-visible:outline-primary"
+                      className="block rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium hover:bg-base-200 focus-visible:outline-2 focus-visible:outline-primary"
                     >
                       {page(id)[lang].nav}
                     </Link>
@@ -85,13 +85,13 @@ export function Header({ lang, otherHref }: { lang: Lang; otherHref: string }) {
             </summary>
             <nav
               aria-label={t.menu}
-              className="absolute right-0 top-[calc(100%+0.75rem)] max-h-[calc(100dvh-6rem)] w-[min(22rem,calc(100vw-2.5rem))] overflow-y-auto overscroll-contain rounded-2xl border border-base-content/10 bg-base-200 p-3 shadow-2xl shadow-black/50"
+              className="absolute right-0 top-[calc(100%+0.75rem)] max-h-[calc(100dvh-6rem)] w-[min(22rem,calc(100vw-2.5rem))] overflow-y-auto overscroll-contain rounded-2xl border border-base-content/10 bg-base-100 p-3 shadow-2xl shadow-neutral/20"
             >
               <p className="eyebrow px-3 pb-1 pt-2 text-base-content/50">{t.services}</p>
               <ul>
                 {serviceIds.map((id) => (
                   <li key={id}>
-                    <Link href={href(id, lang)} className="block rounded-xl px-3 py-2.5 font-medium hover:bg-base-300">
+                    <Link href={href(id, lang)} className="block rounded-xl px-3 py-2.5 font-medium hover:bg-base-200">
                       {page(id)[lang].nav}
                     </Link>
                   </li>
@@ -101,7 +101,7 @@ export function Header({ lang, otherHref }: { lang: Lang; otherHref: string }) {
               <ul>
                 {["prices", ...guideIds, "contact"].map((id) => (
                   <li key={id}>
-                    <Link href={href(id, lang)} className="block rounded-xl px-3 py-2.5 font-medium hover:bg-base-300">
+                    <Link href={href(id, lang)} className="block rounded-xl px-3 py-2.5 font-medium hover:bg-base-200">
                       {page(id)[lang].nav}
                     </Link>
                   </li>
@@ -121,7 +121,7 @@ export function Footer({ lang }: { lang: Lang }) {
   const linkCls =
     "text-neutral-content/80 underline-offset-4 transition-colors hover:text-neutral-content hover:underline focus-visible:outline-2 focus-visible:outline-white";
   return (
-    <footer data-theme="zmk-dark" className="bg-neutral text-neutral-content">
+    <footer className="bg-neutral text-neutral-content">
       <div className="wrap grid gap-12 py-16 sm:grid-cols-2 md:py-20 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Plate size="lg" />
@@ -204,7 +204,7 @@ export function Footer({ lang }: { lang: Lang }) {
 export function StickyBar({ lang, message }: { lang: Lang; message?: string }) {
   const t = ui[lang];
   return (
-    <div data-theme="zmk-dark" className="fixed inset-x-0 bottom-0 z-40 border-t border-base-content/10 bg-base-100/95 px-3 text-base-content pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-base-content/10 bg-base-100/95 px-3 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden">
       <div className="grid grid-cols-[1fr_1.35fr] gap-2.5">
         <a
           href={telLink}
@@ -216,7 +216,7 @@ export function StickyBar({ lang, message }: { lang: Lang; message?: string }) {
           href={waLink(message ?? defaultMessage[lang])}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-secondary font-semibold text-secondary-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral"
+          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1f9d55] font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f9d55]"
         >
           <WhatsAppIcon /> {t.whatsappShort}
         </a>

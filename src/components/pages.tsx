@@ -24,7 +24,7 @@ export function ContentPage({ doc, lang }: { doc: PageDoc; lang: Lang }) {
 
   return (
     <>
-      <section data-theme="zmk-dark" className="relative isolate bg-neutral text-neutral-content">
+      <section className="relative isolate bg-neutral text-neutral-content">
         <HeroGround />
         <div className="wrap relative pt-10 pb-14 md:pt-14 md:pb-20">
           <nav aria-label="Breadcrumb" className="text-sm text-neutral-content/55">
@@ -88,7 +88,7 @@ export function ContentPage({ doc, lang }: { doc: PageDoc; lang: Lang }) {
                 </ul>
               </nav>
             )}
-            <div data-theme="zmk-dark" className="rounded-2xl bg-base-100 p-6 text-base-content">
+            <div className="rounded-2xl bg-neutral p-6 text-neutral-content">
               <p className="font-display text-xl leading-snug font-semibold">{t.ctaTitle}</p>
               <p className="mt-2 text-[0.95rem] leading-relaxed text-neutral-content/70">{t.ctaText}</p>
               <WhatsAppButton message={p.whatsapp} label={t.whatsappShort} className="mt-5 w-full" />
@@ -124,14 +124,13 @@ export function PageCard({ id, lang }: { id: string; lang: Lang }) {
   return (
     <Link
       href={href(id, lang)}
-      data-theme="zmk-dark" 
-      className="group flex h-full flex-col rounded-2xl border border-base-content/10 bg-base-100 p-6 text-base-content transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-secondary/60 hover:shadow-lg hover:shadow-black/30 focus-visible:outline-2 focus-visible:outline-primary"
+      className="group flex h-full flex-col rounded-2xl border border-base-content/10 bg-base-100 p-6 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-base-content/25 hover:shadow-lg hover:shadow-neutral/5 focus-visible:outline-2 focus-visible:outline-primary"
     >
       <h3 className="font-display text-xl font-semibold">{p.nav}</h3>
       <p className="mt-2 flex-1 text-[0.98rem] leading-relaxed text-base-content/65">{p.teaser ?? p.lead}</p>
       <p className="mt-5 flex items-center justify-between gap-4 text-[0.95rem] font-semibold">
         <span className="tabular-nums">{doc.price ? priceText(doc.price, lang) : ui[lang].more}</span>
-        <span className="flex size-9 items-center justify-center rounded-full bg-base-300 transition-colors duration-200 group-hover:bg-secondary group-hover:text-secondary-content">
+        <span className="flex size-9 items-center justify-center rounded-full bg-base-200 transition-colors duration-200 group-hover:bg-neutral group-hover:text-neutral-content">
           <ArrowIcon />
         </span>
       </p>
@@ -163,7 +162,7 @@ export function ContactPanel({ lang, message, className = "" }: { lang: Lang; me
   const t = ui[lang];
   return (
     <div className={`grid gap-4 ${className}`}>
-      <div data-theme="zmk-dark" className="rounded-2xl bg-base-100 p-6 text-base-content md:p-8">
+      <div className="rounded-2xl bg-neutral p-6 text-neutral-content md:p-8">
         <p className="eyebrow text-secondary">WhatsApp</p>
         <p className="mt-3 font-display text-2xl leading-snug font-semibold">
           {lang === "de" ? "Der schnellste Weg: ein Foto Ihrer Unterlagen" : "The fastest way: a photo of your documents"}
@@ -210,7 +209,7 @@ export function ContactPanel({ lang, message, className = "" }: { lang: Lang; me
 export function CtaBand({ lang, message }: { lang: Lang; message: string }) {
   const t = ui[lang];
   return (
-    <section data-theme="zmk-dark" className="relative isolate overflow-hidden bg-neutral text-neutral-content">
+    <section className="relative isolate overflow-hidden bg-neutral text-neutral-content">
       <HeroGround />
       <div className="wrap relative grid items-center gap-10 py-16 md:grid-cols-[1.3fr_1fr] md:py-24">
         <div>

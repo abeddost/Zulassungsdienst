@@ -3,41 +3,34 @@
   themes: false;
 }
 
-/* Palette "Blau, Weiß & Limette": two main colours and one accent.
-     blue   #0C1E6B  royal blue for dark bands, cards, header; deeper at the top of the hero
-     white  #FFFFFF  light bands
-     accent #D4F03C  lime yellow
-   The page alternates light and dark bands. Light is the default theme ("zmk").
-   Any element with data-theme="zmk-dark" switches itself and everything inside it to the
-   dark set, so the same class names work in both. Lime is only used as a fill on dark,
-   where it reads clearly; on light bands the marks and buttons are blue.
-   The three values are also in src/lib/site.ts for the share image. */
+/* One theme. Colours come from the German licence plate: paper white, ink black,
+   the blue of the EU strip, and the yellow of a short-term plate as the rare accent. */
 @plugin "daisyui/theme" {
   name: "zmk";
   default: true;
   prefersdark: false;
   color-scheme: light;
 
-  --color-base-100: #ffffff; /* light band */
-  --color-base-200: #f0f4fc; /* panels on a light band */
-  --color-base-300: #dde6f7;
-  --color-base-content: #0a1647;
-  --color-primary: #1740c4; /* links, labels, small marks */
-  --color-primary-content: #f4f7ff;
-  --color-secondary: #d4f03c; /* lime highlight */
-  --color-secondary-content: #0a1647;
-  --color-accent: #1740c4; /* fill of the main action */
-  --color-accent-content: #f4f7ff;
-  --color-neutral: #0c1e6b;
-  --color-neutral-content: #ffffff;
-  --color-info: #1740c4;
-  --color-info-content: #f4f7ff;
-  --color-success: #1740c4;
-  --color-success-content: #f4f7ff;
-  --color-warning: #d4f03c;
-  --color-warning-content: #0a1647;
-  --color-error: oklch(52% 0.2 27);
-  --color-error-content: #f4f7ff;
+  --color-base-100: oklch(98.6% 0.004 95);
+  --color-base-200: oklch(96.2% 0.006 95);
+  --color-base-300: oklch(90.5% 0.008 95);
+  --color-base-content: oklch(21% 0.02 262);
+  --color-primary: oklch(40% 0.17 262);
+  --color-primary-content: oklch(98% 0.01 262);
+  --color-secondary: oklch(87% 0.17 95);
+  --color-secondary-content: oklch(24% 0.04 95);
+  --color-accent: oklch(64% 0.17 150);
+  --color-accent-content: oklch(99% 0.01 150);
+  --color-neutral: oklch(17% 0.022 262);
+  --color-neutral-content: oklch(96% 0.005 95);
+  --color-info: oklch(55% 0.14 240);
+  --color-info-content: oklch(98% 0.01 240);
+  --color-success: oklch(58% 0.15 150);
+  --color-success-content: oklch(98% 0.01 150);
+  --color-warning: oklch(82% 0.16 85);
+  --color-warning-content: oklch(24% 0.04 85);
+  --color-error: oklch(56% 0.2 27);
+  --color-error-content: oklch(98% 0.01 27);
 
   --radius-selector: 1rem;
   --radius-field: 0.5rem;
@@ -50,51 +43,6 @@
 
   --depth: 0;
   --noise: 0;
-}
-
-@plugin "daisyui/theme" {
-  name: "zmk-dark";
-  default: false;
-  prefersdark: false;
-  color-scheme: dark;
-
-  --color-base-100: #0c1e6b; /* blue band */
-  --color-base-200: #162f8f; /* cards and panels on a blue band */
-  --color-base-300: #2243b3;
-  --color-base-content: #ffffff;
-  --color-primary: #d4f03c;
-  --color-primary-content: #0a1647;
-  --color-secondary: #d4f03c;
-  --color-secondary-content: #0a1647;
-  --color-accent: #d4f03c;
-  --color-accent-content: #0a1647;
-  --color-neutral: #081248; /* footer and the top of the hero: the deepest blue */
-  --color-neutral-content: #ffffff;
-  --color-info: #d4f03c;
-  --color-info-content: #0a1647;
-  --color-success: #d4f03c;
-  --color-success-content: #0a1647;
-  --color-warning: #d4f03c;
-  --color-warning-content: #0a1647;
-  --color-error: oklch(74% 0.17 25);
-  --color-error-content: #0a1647;
-
-  --radius-selector: 1rem;
-  --radius-field: 0.5rem;
-  --radius-box: 1rem;
-
-  --size-selector: 0.25rem;
-  --size-field: 0.25rem;
-
-  --border: 1px;
-
-  --depth: 0;
-  --noise: 0;
-}
-
-/* Light on and behind the 3D plate: a cool white-blue, so the plate keeps its true colours. */
-:root {
-  --plate-glow: #9cc0ff;
 }
 
 @theme inline {
@@ -155,6 +103,18 @@ summary {
   text-transform: uppercase;
 }
 
+/* The hero's accent colour. Registered as a real colour so it can fade from one plate type
+   to the next when the visitor picks a different service on the home page. */
+@property --hero-accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2f4fd0;
+}
+
+.hero-accented {
+  transition: --hero-accent 0.9s ease;
+}
+
 /* Home hero, sized so the whole of it shows without scrolling.
    Header is 4rem tall on phones (plus the 4.75rem call bar at the bottom) and 4.5rem above that.
    The headline scales with the screen height as well as its width, and the plate is sized
@@ -167,7 +127,7 @@ summary {
 
 .hero-fit {
   /* Largest headline that still leaves room for plate, picker and card on this screen height. */
-  --h1: clamp(1.9rem, min(11.2vw, calc(30.5svh - 10rem)), 3.4rem);
+  --h1: clamp(1.9rem, min(11.2vw, calc(30.5svh - 9.8rem)), 3.4rem);
   padding-block: clamp(0.875rem, 2.6svh, 2.25rem);
 }
 
@@ -202,11 +162,12 @@ summary {
   }
 }
 
-/* The dark hero ground: deep blue brightening downward, and a fine grid that drifts slowly. */
+/* The dark hero ground: two soft lights and a fine grid that drifts slowly. */
 .hero-ground {
   background:
-    radial-gradient(70rem 30rem at 50% 118%, rgb(120 170 255 / 0.5), transparent 68%),
-    linear-gradient(180deg, #071040 0%, #0c1e6b 44%, #1c4fd6 100%);
+    radial-gradient(64rem 36rem at 80% -8%, color-mix(in oklch, var(--hero-accent) 58%, transparent), transparent 62%),
+    radial-gradient(40rem 26rem at 4% 108%, oklch(87% 0.17 95 / 0.13), transparent 60%),
+    var(--color-neutral);
 }
 
 .hero-grid {
@@ -279,6 +240,9 @@ summary {
   .hero-grid,
   .rise {
     animation: none;
+  }
+  .hero-accented {
+    transition: none;
   }
 }
 

@@ -3,7 +3,7 @@ import { pageMetadata, RenderPage, staticParams } from "../../render";
 
 export const dynamicParams = false;
 
-export const viewport: Viewport = { themeColor: "#0c1e6b", colorScheme: "light" };
+export const viewport: Viewport = { themeColor: "#fbfaf7", colorScheme: "light" };
 
 export function generateStaticParams() {
   return staticParams("de");

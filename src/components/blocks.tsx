@@ -81,12 +81,12 @@ function BlockView({ block, lang }: { block: Block; lang: Lang }) {
           )}
           <div className="grid gap-4">
             {block.groups.map((group, gi) => (
-              <div key={gi} className="rounded-2xl border border-base-content/10 bg-base-200 p-5 md:p-7">
+              <div key={gi} className="rounded-2xl border border-base-content/10 bg-base-100 p-5 md:p-7">
                 {group.title && <h3 className="mb-4 font-display text-lg font-semibold">{group.title}</h3>}
                 <ul className="space-y-3">
                   {group.items.map((item, i) => (
                     <li key={i} className="flex gap-3.5 text-[1.02rem] leading-relaxed text-base-content/85">
-                      <span className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+                      <span className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                         <CheckIcon className="size-3.5" />
                       </span>
                       <span>
@@ -190,10 +190,10 @@ function BlockView({ block, lang }: { block: Block; lang: Lang }) {
     case "callout": {
       const tone =
         block.tone === "warn"
-          ? "border-secondary bg-secondary/30"
+          ? "border-warning/60 bg-warning/15"
           : block.tone === "tip"
-            ? "border-base-content/20 bg-base-200"
-            : "border-base-content/15 bg-base-200";
+            ? "border-success/40 bg-success/10"
+            : "border-primary/25 bg-primary/5";
       return (
         <aside className={`rounded-2xl border p-5 md:p-7 ${tone}`}>
           <h2 className="font-display text-lg font-semibold">{block.title}</h2>
@@ -257,7 +257,7 @@ function BlockView({ block, lang }: { block: Block; lang: Lang }) {
           <h2 id={headingId(block.h2)} className={`${h2Cls} mb-5`}>
             {block.h2}
           </h2>
-          <ul className="divide-y divide-base-content/10 rounded-2xl border border-base-content/10 bg-base-200">
+          <ul className="divide-y divide-base-content/10 rounded-2xl border border-base-content/10 bg-base-100">
             {block.keys.map((key) => (
               <li key={key} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 p-5 md:px-7">
                 <div className="min-w-0">

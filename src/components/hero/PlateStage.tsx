@@ -17,6 +17,8 @@ export type PlateVariant = {
   price: string;
   href: string;
   whatsapp: string;
+  /** Hex accent for light and background glow. */
+  accent: string;
   spec: PlateSpec;
   /** The visitor types their own letters and digits for this one. */
   custom?: boolean;
@@ -40,15 +42,13 @@ type Props = {
   text: PlateStageText;
   district: string;
   waNumber: string;
-  /** Hex colour of the light on and behind the plate: the site's accent. */
-  accent: string;
   /** Label and headline: always visible, beside the plate on wide screens and above it on phones. */
   intro: ReactNode;
   /** Lead text and main buttons: shown from tablet width up, under the headline. */
   children: ReactNode;
 };
 
-export function PlateStage({ variants, text, district, waNumber, accent, intro, children }: Props) {
+export function PlateStage({ variants, text, district, waNumber, intro, children }: Props) {
   const [activeId, setActiveId] = useState(variants[0].id);
   const [letters, setLetters] = useState("AB");
   const [digits, setDigits] = useState("123");
@@ -66,6 +66,12 @@ export function PlateStage({ variants, text, district, waNumber, accent, intro, 
   const plateText = `${district}-${letters || "A"} ${digits || "1"}`;
   const message = active.custom ? text.customMessage.replace("{plate}", plateText) : active.whatsapp;
   const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+
+  // The page's accent follows the chosen plate type.
+  useEffect(() => {
+    const fixed = getComputedStyle(document.documentElement).getPropertyValue("--hero-accent-fixed").trim();
+    root.current?.closest("section")?.style.setProperty("--hero-accent", fixed || active.accent);
+  }, [active.accent]);
 
   // Flat drawing of the same plate when WebGL is not available.
   useEffect(() => {
@@ -112,7 +118,7 @@ export function PlateStage({ variants, text, district, waNumber, accent, intro, 
               <PlateScene
                 spec={spec}
                 flipKey={active.id}
-                accent={accent}
+                accent={active.accent}
                 onReady={() => setMode("webgl")}
                 onFail={() => setMode("flat")}
               />
@@ -134,7 +140,7 @@ export function PlateStage({ variants, text, district, waNumber, accent, intro, 
                   on ? "border-white bg-white text-black" : "border-white/20 text-white/80 hover:border-white/50 hover:text-white"
                 }`}
               >
-                <span aria-hidden="true" className="size-2 rounded-full bg-secondary" />
+                <span aria-hidden="true" className="size-2.5 rounded-full" style={{ backgroundColor: v.accent }} />
                 {v.label}
               </button>
             );
@@ -192,7 +198,7 @@ export function PlateStage({ variants, text, district, waNumber, accent, intro, 
               href={waHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-12 flex-1 items-center justify-center gap-2.5 rounded-full bg-secondary px-4 font-semibold whitespace-nowrap text-secondary-content transition-[filter] duration-200 hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary sm:flex-none sm:px-5"
+              className="inline-flex min-h-12 flex-1 items-center justify-center gap-2.5 rounded-full bg-[#1f9d55] px-4 font-semibold whitespace-nowrap text-white transition-colors duration-200 hover:bg-[#178246] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f9d55] sm:flex-none sm:px-5"
             >
               <WhatsAppIcon />
               <span>

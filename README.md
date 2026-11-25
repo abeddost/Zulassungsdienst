@@ -16,8 +16,7 @@ Built with Next.js (App Router), Tailwind CSS 4 and daisyUI 5. Every page is gen
 | Guides (registration office, Kastel/Kostheim, costs, documents) | `src/content/pages/guides.ts` |
 | Prices page, contact page | `src/content/pages/core.ts` |
 | Impressum and Datenschutz | `src/content/pages/legal.ts` |
-| Colours (palette "Blau, Weiß & Limette": blue `#0C1E6B`, white `#FFFFFF`, accent `#D4F03C`; dark bands are marked with `data-theme="zmk-dark"`) | `src/app/globals.css` and `colors` in `src/lib/site.ts`, both together |
-| Fonts | `src/app/render.tsx` |
+| Colours and fonts | `src/app/globals.css`, `src/app/render.tsx` |
 
 Values marked `TODO owner` in `src/lib/site.ts` are still missing. Missing Impressum details show up
 on the page as bold `[Angabe fehlt: ...]` so they cannot go live unnoticed.
@@ -46,11 +45,12 @@ npm run build    # production build
 The home page hero shows a licence plate as a real 3D object (`src/components/hero/`).
 It floats, leans toward the pointer, and flips to a different plate when a service is picked:
 standard, custom (the visitor types their own number), short-term, export and deregistered.
+The page's accent colour changes with it.
 
 - `plate-art.ts` draws the plate face. Change how a plate type looks here.
 - `PlateScene.tsx` is the 3D scene (Three.js). It pauses when off screen.
 - `PlateStage.tsx` is the picker, the info panel and the WhatsApp links.
-- The plate types are listed in `src/components/home.tsx`; their texts are in
+- The plate types and their colours are listed in `src/components/home.tsx`; their texts are in
   `src/content/home.ts`.
 
 Visitors who prefer reduced motion get a still plate. If the browser cannot run WebGL, a flat

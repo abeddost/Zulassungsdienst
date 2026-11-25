@@ -43,6 +43,7 @@ export function HomePage({ lang }: { lang: Lang }) {
       price: priceText("registration", lang),
       href: href("register", lang),
       whatsapp: page("register")[lang].whatsapp,
+      accent: "#3d6bff",
       spec: { strip: true, district, code: own, seals: "full" },
     },
     {
@@ -51,6 +52,7 @@ export function HomePage({ lang }: { lang: Lang }) {
       price: `+ ${priceText("customPlate", lang)}`,
       href: href("customplate", lang),
       whatsapp: page("customplate")[lang].whatsapp,
+      accent: "#19b8a6",
       spec: { strip: true, district, code: "AB 123", seals: "full" },
       custom: true,
     },
@@ -60,6 +62,7 @@ export function HomePage({ lang }: { lang: Lang }) {
       price: priceText("shortTerm", lang),
       href: href("shortterm", lang),
       whatsapp: page("shortterm")[lang].whatsapp,
+      accent: "#f4c600",
       spec: { strip: false, district, code: "04123", seals: "full", side: { tone: "yellow", lines: ["30", "11", "26"] } },
     },
     {
@@ -68,6 +71,7 @@ export function HomePage({ lang }: { lang: Lang }) {
       price: priceText("export", lang),
       href: href("export", lang),
       whatsapp: page("export")[lang].whatsapp,
+      accent: "#ff4d4d",
       spec: { strip: false, district, code: "123 A", seals: "full", side: { tone: "red", lines: ["15", "12", "26"] } },
     },
     {
@@ -76,15 +80,16 @@ export function HomePage({ lang }: { lang: Lang }) {
       price: priceText("deregistration", lang),
       href: href("deregister", lang),
       whatsapp: page("deregister")[lang].whatsapp,
+      accent: "#9aa3b5",
       spec: { strip: true, district, code: own, seals: "removed" },
     },
   ];
 
   return (
     <>
-      {/* Hero: the licence plate as a 3D object that flips to the chosen plate type */}
+      {/* Hero: the licence plate as a 3D object that changes with the chosen service */}
       {/* Sized to fit one screen: see .hero-screen and .hero-fit in globals.css. */}
-      <section data-theme="zmk-dark" className="hero-screen relative isolate flex flex-col justify-center overflow-hidden bg-neutral text-neutral-content">
+      <section className="hero-accented hero-screen relative isolate flex flex-col justify-center overflow-hidden bg-neutral text-neutral-content">
         <HeroGround />
         <div className="hero-fit wrap relative">
           <div className="rise">
@@ -100,7 +105,6 @@ export function HomePage({ lang }: { lang: Lang }) {
               variants={variants}
               district={district}
               waNumber={site.phone.whatsapp}
-              accent={site.colors.accent}
               text={{
                 pick: c.plate.pick,
                 letters: c.plate.letters,
@@ -143,8 +147,8 @@ export function HomePage({ lang }: { lang: Lang }) {
         <ServiceGrid lang={lang} exclude={["business"]} className="mt-12 lg:grid-cols-3" />
       </section>
 
-      {/* Steps, beside the conversation they describe (dark band) */}
-      <section data-theme="zmk-dark" className="bg-base-100 text-base-content">
+      {/* Steps, beside the conversation they describe */}
+      <section className="border-y border-base-content/10 bg-base-200">
         <div className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div>
             <Label n="02">{lang === "de" ? "Ablauf" : "Process"}</Label>
@@ -162,8 +166,8 @@ export function HomePage({ lang }: { lang: Lang }) {
             </ol>
           </div>
 
-          <div aria-hidden="true" className="reveal self-center rounded-[1.75rem] border border-base-content/10 bg-neutral p-2 shadow-2xl shadow-black/40 lg:rotate-1">
-            <div className="rounded-[1.35rem] bg-black/30">
+          <div aria-hidden="true" className="reveal self-center rounded-[1.75rem] bg-neutral p-2 shadow-2xl shadow-neutral/25 lg:rotate-1">
+            <div className="rounded-[1.35rem] bg-[#0b141a]">
               <div className="flex items-center gap-3 border-b border-white/8 px-4 py-3.5">
                 <span className="flex size-10 items-center justify-center rounded-full bg-white">
                   <span className="font-mono text-xs font-bold text-black">{district}</span>
@@ -176,9 +180,9 @@ export function HomePage({ lang }: { lang: Lang }) {
               <div className="space-y-2.5 px-3.5 py-4 text-[0.95rem] leading-snug">
                 {c.chat.map((m, i) => (
                   <div key={i} className={`flex ${m.from === "us" ? "justify-start" : "justify-end"}`}>
-                    <div className={`max-w-[84%] rounded-2xl px-3.5 py-2.5 ${m.from === "us" ? "rounded-tl-md bg-white/10 text-white/90" : "rounded-tr-md bg-secondary text-secondary-content"}`}>
+                    <div className={`max-w-[84%] rounded-2xl px-3.5 py-2.5 ${m.from === "us" ? "rounded-tl-md bg-[#1f2c34] text-white/90" : "rounded-tr-md bg-[#144d37] text-white"}`}>
                       {m.attachment && (
-                        <span className="mb-2 flex items-center gap-2.5 rounded-xl bg-black/15 px-3 py-2.5 text-xs">
+                        <span className="mb-2 flex items-center gap-2.5 rounded-xl bg-black/25 px-3 py-2.5 text-xs text-white/80">
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-5 shrink-0">
                             <rect x="3" y="4" width="18" height="16" rx="2.5" />
                             <path d="m3 16 5-5 4 4 3-3 6 6" />
@@ -220,7 +224,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                 <tr key={row[0]} className="border-t border-base-content/10">
                   <th scope="row" className="px-5 py-4 align-top font-semibold">{row[0]}</th>
                   <td className="px-5 py-4 align-top text-base-content/70">{row[1]}</td>
-                  <td className="border-t border-white/10 bg-neutral px-5 py-4 align-top font-medium text-neutral-content">{row[2]}</td>
+                  <td className="bg-neutral px-5 py-4 align-top font-medium text-neutral-content">{row[2]}</td>
                 </tr>
               ))}
             </tbody>
@@ -229,14 +233,14 @@ export function HomePage({ lang }: { lang: Lang }) {
         <p className="mt-5 max-w-2xl text-[1.02rem] leading-relaxed text-base-content/65">{c.compareNote}</p>
       </section>
 
-      {/* Prices (dark band) */}
-      <section data-theme="zmk-dark" className="bg-base-100 text-base-content">
+      {/* Prices */}
+      <section className="border-y border-base-content/10 bg-base-200">
         <div className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div>
             <Label n="04">{page("prices")[lang].nav}</Label>
             <h2 className={`${title} mt-6`}>{c.pricesTitle}</h2>
             <p className="reveal mt-6 text-lg leading-relaxed text-base-content/70">{c.pricesLead}</p>
-            <Link href={href("prices", lang)} className="mt-8 inline-flex min-h-12 items-center gap-2.5 rounded-full bg-base-content px-6 font-semibold text-base-100 transition-colors hover:bg-base-content/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            <Link href={href("prices", lang)} className="mt-8 inline-flex min-h-12 items-center gap-2.5 rounded-full bg-neutral px-6 font-semibold text-neutral-content transition-colors hover:bg-neutral/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
               {c.pricesLink} <ArrowIcon />
             </Link>
           </div>
@@ -256,7 +260,7 @@ export function HomePage({ lang }: { lang: Lang }) {
 
       {/* Area + business */}
       <section className="wrap grid gap-4 py-20 md:py-28 lg:grid-cols-[1.25fr_1fr]">
-        <div className="reveal rounded-3xl border border-base-content/15 bg-base-200 p-7 md:p-10">
+        <div className="reveal rounded-3xl border border-base-content/10 p-7 md:p-10">
           <p className="eyebrow flex items-center gap-2 text-primary">
             <PinIcon className="size-4" /> {site.address.postalCode} {site.address.district}
           </p>
@@ -273,13 +277,13 @@ export function HomePage({ lang }: { lang: Lang }) {
             {c.areaLink} <ArrowIcon />
           </Link>
         </div>
-        <div data-theme="zmk-dark" className="reveal flex flex-col justify-between rounded-3xl bg-base-100 p-7 text-base-content md:p-10">
+        <div className="reveal flex flex-col justify-between rounded-3xl bg-secondary p-7 text-secondary-content md:p-10">
           <div>
-            <p className="eyebrow text-secondary">B2B</p>
+            <p className="eyebrow">B2B</p>
             <h2 className="mt-4 font-display text-3xl leading-tight font-semibold md:text-[2.6rem]">{c.businessTitle}</h2>
-            <p className="mt-4 text-[1.05rem] leading-relaxed text-base-content/75">{c.businessText}</p>
+            <p className="mt-4 text-[1.05rem] leading-relaxed text-secondary-content/80">{c.businessText}</p>
           </div>
-          <Link href={href("business", lang)} className="mt-10 inline-flex min-h-12 items-center gap-2.5 self-start rounded-full bg-secondary px-6 font-semibold text-secondary-content transition-[filter] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary">
+          <Link href={href("business", lang)} className="mt-10 inline-flex min-h-12 items-center gap-2.5 self-start rounded-full bg-neutral px-6 font-semibold text-neutral-content transition-colors hover:bg-neutral/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral">
             {c.businessLink} <ArrowIcon />
           </Link>
         </div>

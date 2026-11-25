@@ -99,7 +99,7 @@ export function NotFoundPage({ lang }: { lang: Lang }) {
         <p className="eyebrow text-primary">404</p>
         <h1 className="mt-4 text-4xl font-semibold md:text-6xl">{t.notFoundTitle}</h1>
         <p className="mt-5 max-w-xl text-lg leading-relaxed text-base-content/70">{t.notFoundText}</p>
-        <Link href={href("home", lang)} className="mt-8 inline-flex min-h-12 items-center rounded-full bg-base-content px-6 font-semibold text-base-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+        <Link href={href("home", lang)} className="mt-8 inline-flex min-h-12 items-center rounded-full bg-neutral px-6 font-semibold text-neutral-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
           {t.toHome}
         </Link>
       </main>

@@ -18,12 +18,12 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 72,
-          background: site.colors.dark,
-          color: site.colors.light,
+          background: "linear-gradient(135deg, #0b1020 0%, #0d1a4a 100%)",
+          color: "#f6f4ef",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", fontSize: 30, letterSpacing: 6, color: site.colors.accent }}>WIESBADEN · MAINZ-KASTEL</div>
+        <div style={{ display: "flex", fontSize: 30, letterSpacing: 6, color: "#f2cf3b" }}>WIESBADEN · MAINZ-KASTEL</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
@@ -43,7 +43,7 @@ export default function OpengraphImage() {
             <div style={{ display: "flex", padding: "10px 44px" }}>{`${district} ${letters} ${digits}`}</div>
           </div>
           <div style={{ display: "flex", marginTop: 44, fontSize: 64, fontWeight: 700 }}>{site.name}</div>
-          <div style={{ display: "flex", marginTop: 12, fontSize: 34, color: site.colors.light, opacity: 0.7 }}>Kfz-Zulassung ohne Termin · Car registration without the wait</div>
+          <div style={{ display: "flex", marginTop: 12, fontSize: 34, color: "#c9cddc" }}>Kfz-Zulassung ohne Termin · Car registration without the wait</div>
         </div>
       </div>
     ),

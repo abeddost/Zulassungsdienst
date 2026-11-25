@@ -16,12 +16,6 @@ export const site = {
    */
   name: "Zulassungsdienst Mainz-Kastel",
   shortName: "Zulassungsdienst Kastel",
-  /**
-   * Brand colours, palette "Blau, Weiß & Limette": blue and white bands in turn, lime accent.
-   * The theme in src/app/globals.css sets the same three values; change both together.
-   */
-  colors: { dark: "#0C1E6B", light: "#FFFFFF", accent: "#D4F03C" },
-
   /** Letters shown on the licence-plate logo. */
   plate: { district: "WI", letters: "MK", digits: "93" },
 
