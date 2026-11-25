@@ -16,7 +16,7 @@ Built with Next.js (App Router), Tailwind CSS 4 and daisyUI 5. Every page is gen
 | Guides (registration office, Kastel/Kostheim, costs, documents) | `src/content/pages/guides.ts` |
 | Prices page, contact page | `src/content/pages/core.ts` |
 | Impressum and Datenschutz | `src/content/pages/legal.ts` |
-| Colours (palette "Tiefblau & Limette": dark `#0A1647`, light `#E9F0FC`, accent `#D4F03C`; dark bands are marked with `data-theme="zmk-dark"`) | `src/app/globals.css` and `colors` in `src/lib/site.ts`, both together |
+| Colours (palette "Blau, Weiß & Limette": blue `#0C1E6B`, white `#FFFFFF`, accent `#D4F03C`; dark bands are marked with `data-theme="zmk-dark"`) | `src/app/globals.css` and `colors` in `src/lib/site.ts`, both together |
 | Fonts | `src/app/render.tsx` |
 
 Values marked `TODO owner` in `src/lib/site.ts` are still missing. Missing Impressum details show up

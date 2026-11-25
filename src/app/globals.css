@@ -3,9 +3,9 @@
   themes: false;
 }
 
-/* Palette "Tiefblau & Limette": two main colours and one accent.
-     dark   #0A1647  deep blue, brightening to royal blue in the hero
-     light  #E9F0FC  a pale tone of the same blue
+/* Palette "Blau, Weiß & Limette": two main colours and one accent.
+     blue   #0C1E6B  royal blue for dark bands, cards, header; deeper at the top of the hero
+     white  #FFFFFF  light bands
      accent #D4F03C  lime yellow
    The page alternates light and dark bands. Light is the default theme ("zmk").
    Any element with data-theme="zmk-dark" switches itself and everything inside it to the
@@ -18,9 +18,9 @@
   prefersdark: false;
   color-scheme: light;
 
-  --color-base-100: #e9f0fc; /* light band */
-  --color-base-200: #dbe6f8; /* panels on a light band */
-  --color-base-300: #c8d8f1;
+  --color-base-100: #ffffff; /* light band */
+  --color-base-200: #f0f4fc; /* panels on a light band */
+  --color-base-300: #dde6f7;
   --color-base-content: #0a1647;
   --color-primary: #1740c4; /* links, labels, small marks */
   --color-primary-content: #f4f7ff;
@@ -28,8 +28,8 @@
   --color-secondary-content: #0a1647;
   --color-accent: #1740c4; /* fill of the main action */
   --color-accent-content: #f4f7ff;
-  --color-neutral: #0a1647;
-  --color-neutral-content: #f4f7ff;
+  --color-neutral: #0c1e6b;
+  --color-neutral-content: #ffffff;
   --color-info: #1740c4;
   --color-info-content: #f4f7ff;
   --color-success: #1740c4;
@@ -58,18 +58,18 @@
   prefersdark: false;
   color-scheme: dark;
 
-  --color-base-100: #0a1647; /* dark band */
-  --color-base-200: #13235e; /* cards and panels on a dark band */
-  --color-base-300: #1d327a;
-  --color-base-content: #f4f7ff;
+  --color-base-100: #0c1e6b; /* blue band */
+  --color-base-200: #162f8f; /* cards and panels on a blue band */
+  --color-base-300: #2243b3;
+  --color-base-content: #ffffff;
   --color-primary: #d4f03c;
   --color-primary-content: #0a1647;
   --color-secondary: #d4f03c;
   --color-secondary-content: #0a1647;
   --color-accent: #d4f03c;
   --color-accent-content: #0a1647;
-  --color-neutral: #060d2e; /* footer and the top of the hero: the deepest blue */
-  --color-neutral-content: #f4f7ff;
+  --color-neutral: #081248; /* footer and the top of the hero: the deepest blue */
+  --color-neutral-content: #ffffff;
   --color-info: #d4f03c;
   --color-info-content: #0a1647;
   --color-success: #d4f03c;
@@ -206,7 +206,7 @@ summary {
 .hero-ground {
   background:
     radial-gradient(70rem 30rem at 50% 118%, rgb(120 170 255 / 0.5), transparent 68%),
-    linear-gradient(180deg, #050b2b 0%, #0a1b63 46%, #1846c9 100%);
+    linear-gradient(180deg, #071040 0%, #0c1e6b 44%, #1c4fd6 100%);
 }
 
 .hero-grid {
